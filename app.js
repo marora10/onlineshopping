@@ -4,9 +4,24 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
+var indexRouter = require('./routes/index.route');
+var usersRouter = require('./routes/user.route');
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+// Connecting to the database
+var url="mongodb+srv://muskan_10:muskan10@development-grmn7.mongodb.net/test?retryWrites=true&w=majority"
+mongoose
+  .connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Successfully connected to the database");
+  })
+  .catch(err => {
+    console.log("Could not connect to the database. Exiting now...", err);
+    process.exit();
+  });
 var app = express();
 
 // view engine setup
